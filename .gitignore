@@ -26,3 +26,5 @@ Thumbs.db
  
 # Generated files
 recommended_*.txt
+
+.env

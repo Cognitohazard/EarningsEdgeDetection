@@ -26,6 +26,11 @@ $COMBINED_FLAG = ""
 $ANALYZE_TICKER = $null
 $ANALYZE_MODE = $false
 
+get-content .env | ForEach-Object {
+    $name, $value = $_.split('=')
+    set-content env:\$name $value
+}
+
 # Parse arguments
 for ($i = 0; $i -lt $args.Count; $i++) {
     switch ($args[$i]) {

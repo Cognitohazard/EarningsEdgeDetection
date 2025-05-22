@@ -26,9 +26,16 @@ $COMBINED_FLAG = ""
 $ANALYZE_TICKER = $null
 $ANALYZE_MODE = $false
 
-get-content .env | ForEach-Object {
-    $name, $value = $_.split('=')
-    set-content env:\$name $value
+if (Test-Path ".env") {
+    Get-Content .env | ForEach-Object {
+        if ($_ -match '^\s*([^=]+?)\s*=\s*(.*)$') {
+            $name = $matches[1]
+            $value = $matches[2]
+            Set-Item -Path "Env:$name" -Value $value
+        }
+    }
+} else {
+    Write-Host ".env file not found. Skipping environment variable loading."
 }
 
 # Parse arguments
